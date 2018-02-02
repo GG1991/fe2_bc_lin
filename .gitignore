@@ -11,4 +11,7 @@
 *.blg
 *.spl
 *.bbl
-*.vtk
+
+*.vtu
+*.pvtu
+*.msh
