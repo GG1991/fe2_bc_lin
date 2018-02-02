@@ -1,0 +1,63 @@
+\documentclass{standalone}
+
+\begin{document}
+
+\begin{tikzpicture}[>=latex,node distance=0pt, line width=1.25mm]
+
+% the h.m.s.
+
+    %\draw [gray!50]  (2,0) -- (13,1) -- (26,6) -- (15,23) -- (1,20) -- cycle;
+    \draw [black] plot [smooth cycle] coordinates {(6,15) (13,1) (26,6) (21,23)
+    (12,20)};
+
+    \begin{scope}[yshift = 0 cm,xshift = 4 cm]
+
+    \foreach \y [count=\n]in {8,10,12,14}{ 
+       \foreach \x [count=\n]in {8,10,12,14}{ 
+         \begin{scope}[yshift = \y cm,xshift = \x cm,start chain=going right]
+           \draw (0,0) -- (2,0) -- (2,2) -- (0,2) -- cycle;
+           %\filldraw[fill=black!40!white,draw=black] (1,1) circle (0.5cm);
+         \end{scope}
+       }
+    }
+
+    \filldraw[fill=black,draw=black] (5,12) circle (0.25cm);
+    \filldraw[fill=black,draw=black] (6,12) circle (0.25cm);
+    \filldraw[fill=black,draw=black] (7,12) circle (0.25cm);
+
+    \filldraw[fill=black,draw=black] (17,12) circle (0.25cm);
+    \filldraw[fill=black,draw=black] (18,12) circle (0.25cm);
+    \filldraw[fill=black,draw=black] (19,12) circle (0.25cm);
+
+    \filldraw[fill=black,draw=black] (12,5) circle (0.25cm);
+    \filldraw[fill=black,draw=black] (12,6) circle (0.25cm);
+    \filldraw[fill=black,draw=black] (12,7) circle (0.25cm);
+
+    \filldraw[fill=black,draw=black] (12,17) circle (0.25cm);
+    \filldraw[fill=black,draw=black] (12,18) circle (0.25cm);
+    \filldraw[fill=black,draw=black] (12,19) circle (0.25cm);
+
+    \end{scope}
+
+% the r.v.e.
+
+    \begin{scope}[yshift = 8 cm,xshift = 45 cm,start chain=going right,scale=5]
+          \draw (0,0) -- (2,0) -- (2,2) -- (0,2) -- cycle;
+          \filldraw[fill=black!40!white,draw=black] (1,1) circle (0.5cm);
+    \end{scope}
+
+    \draw[-{Latex[length=20mm,width=15mm]}] (23,23) ..  controls ++(10,+3) ..
+    node[below, scale=10] {$\overline{\bm{\epsilon}}$} 
+    ++(20,-2);
+    \draw[{Latex[length=20mm,width=15mm]}-] (23,2) .. controls ++(10,-3) .. 
+    node[above, scale=10] {$\overline{\bm{\sigma}}$}
+    ++(22,+2);
+
+    \node[scale=10] at (3,4) {$\overline{\bm{u}}, \overline{\bm{\epsilon}}, \overline{\bm{\sigma}}$} ;
+    \node[scale=10] at (53,4) {${\bm{u}}, {\bm{\epsilon}}, {\bm{\sigma}}$} ;
+
+
+\end{tikzpicture}
+
+\end{document}
+

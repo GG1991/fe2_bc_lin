@@ -1,0 +1,59 @@
+\documentclass{standalone}
+
+\begin{document}
+
+\begin{tikzpicture}[>=latex,node distance=0pt,font={\fontsize{40pt}{12}\selectfont}]
+
+% structure
+\foreach \y [count=\n]in {0,1,2,3,4,5,6,7,8,9}
+{
+  \def\j{\y*1.0};
+  \begin{scope}[yshift = \j cm,xshift = 0 cm,start chain=going right]
+   \filldraw[fill=black!40!white,draw=black] (0,0.3333) -- (10,0.3333) -- (10,0.6666) -- (0,0.6666) -- cycle;
+  \end{scope}
+}
+\draw[line width=1.75mm] (0,0) -- (10,0) -- (10,10) -- (0,10) -- cycle;
+
+
+
+
+\draw[-{Latex[length=5mm,width=4mm]}, line width=1.5mm] (10.5,9.5) -- ++(1.5,0)
+  -- ++(0,1);
+
+% rve
+\begin{scope}[xshift=10.0cm,yshift=11cm, rotate=0.0, scale=1.1]
+
+ \filldraw[fill=black!40!white,draw=black] (0,1) rectangle (3,2);
+ \draw[draw=black, line width=2.0mm] (0,0) rectangle (3,3);
+
+ \draw[line width=0.5mm] (3,0) -- ++(2.5,0);
+ \draw[line width=0.5mm] (3,1) -- ++(2.5,0);
+ \draw[line width=0.5mm] (3,2) -- ++(2.5,0);
+ \draw[line width=0.5mm] (3,3) -- ++(2.5,0);
+
+ \draw[{Latex[length=5mm,width=2mm]}-{Latex[length=5mm,width=2mm]},line width=0.5mm]
+ (5.5,1) --  node[above,rotate=90,scale=1.5] {$\frac{\ell}{3}$}  ++(0,1);
+ \draw[{Latex[length=5mm,width=2mm]}-{Latex[length=5mm,width=2mm]},line width=0.5mm]
+ (5.5,2) --  node[above,rotate=90,scale=1.5] {$\frac{\ell}{3}$}  ++(0,1);
+ \draw[{Latex[length=5mm,width=2mm]}-{Latex[length=5mm,width=2mm]},line width=0.5mm]
+ (5.5,0) --  node[above,rotate=90,scale=1.5] {$\frac{\ell}{3}$}  ++(0,1);
+
+ \draw[line width=0.5mm] (0,3) -- ++(0,1.5);
+ \draw[line width=0.5mm] (3,3) -- ++(0,1.5);
+ \draw[{Latex[length=5mm,width=4mm]}-{Latex[length=5mm,width=4mm]},line width=0.5mm] 
+ (0,4.5) --  node[above,scale=1.5] {$\ell$}  ++(3,0);
+
+\end{scope}
+
+% axes
+\draw[-latex,line width=1.75mm] (0,10) -- ++ (0, 5) ;
+\draw[-latex,line width=1.75mm] (10,0) -- ++ (5, 0) ;
+\node[scale=1.5] (a) at (13,1)  {$x$};
+\node[scale=1.5] (a) at (1,13)  {$y$};
+\node[scale=1.5] (a) at (-1,-1) {$0$};
+\node[scale=1.5] (a) at (10,-1) {$\overline{\ell}$};
+\node[scale=1.5] (a) at (-1,10) {$\overline{\ell}$};
+
+\end{tikzpicture}
+
+\end{document}

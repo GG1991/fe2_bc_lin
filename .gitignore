@@ -1,0 +1,14 @@
+*.aux
+*.out
+*.dat
+*.toc
+*.vrb
+*.pdf
+*.log
+*.nav
+*.snm
+*.swp
+*.blg
+*.spl
+*.bbl
+*.vtk
