@@ -20,6 +20,7 @@
 
 \newcommand{\sputnik}{{\ttfamily \fontseries{b}\selectfont SPUTNIK }}
 \newcommand{\micro}{{\ttfamily \fontseries{b}\selectfont MICRO }}
+\newcommand{\fe}{FE$^2$}
 
 %--------------------------------------------------
 
@@ -115,7 +116,8 @@ homogenization procedure and we compare the solution with the \emph{micro-model}
 and the \emph{parallel} and \emph{serial mixture} rules. 
 
 %---------------------------------------------------------------------------------------------------
-\section{Homogenization methods}
+
+\section{The \fe multi-scale method}
 
 The idea of homogenization methods is to get average properties of the physical
 quantities in finite portions of the domain. With these properties, then, is 
@@ -238,6 +240,62 @@ immediately calculated. In this work we are going to explore the condition
 $ u = E \cdot y $ which gives $\langle \epsilon \rangle = E$ as we need. It
 should be remark that different \emph{b.c.} can give the same result for example 
 periodic \emph{b.c.} and uniform stress Neumann conditions work.
+
+\subsection{Boundary conditions}
+
+Three types of boundary conditions are often considered at the time \fe method is applied. 
+
+\begin{itemize}
+\item uniform strain
+\item periodics
+\item uniform stress
+\end{itemize}
+
+\subsubsection{Uniform strain}
+
+\subsubsection{Periodic boundary conditions}
+
+In this conditions we it is ask periodicity for the displacements field and anti-periodicity for the tension on the
+surface.
+First of all we have to define surfaces where we consider that the periodicity of this fields should happen.
+For the two-dimensional square domain that we use in this work it seems reasonable to select the two pair of opposite parallel faces 
+as we show on figure~\ref{fig_periodic_square}.
+There, we select the points, except those in the corners, with a group nomenclature $\Gamma^+$ and $\Gamma^-$ that they
+can be represented as:
+
+\begin{equation}
+\Gamma^+ = \{ \bm{x} = (x_1, x_2) \in \Gamma \,\setminus\, (x_1 = \ell_x \,\vee\, x_2 = \ell_y) \,\wedge\,
+\bm{x}\neq(0,0) \,\wedge\,  \bm{x}\neq(\ell_x,0) \,\wedge\, \bm{x}\neq(0,\ell_y) \}
+\end{equation}
+\begin{equation}
+\Gamma^- = \{ \bm{x} = (x_1, x_2) \in \Gamma \,\setminus\, (x_1 = 0 \,\vee\, x_2 = 0) \,\wedge\,
+  \bm{x}\neq(\ell_x,0) \,\wedge\, \bm{x}\neq(\ell_x,\ell_y) \,\wedge\, \bm{x}\neq(0,\ell_y) \}
+\end{equation}
+
+Then for every point $\bm{x}^+ \in \Gamma^+$ we will assign a symmetric point $\bm{x}^- \in \Gamma^-$ that will we in
+the nearest point on the opposite face of the square as we show in figure~\ref{fig_periodic_square}.
+
+By this way the periodic condition for the displacement field on the surface will be state as:
+
+\begin{equation}
+\bm{u}^+ - \bm{u}^- = \overline{\bm{\epsilon}} (\bm{x}^+ - \bm{x}^-),
+\end{equation}
+
+\noindent
+and the condition for the anti-periodic tractions will be:
+
+\begin{equation}
+\bm{\sigma}^{+} \cdot\hat{n}^+ + \bm{\sigma}^{-} \cdot\hat{n}^- = 0,
+\end{equation}
+
+\noindent
+where $\bm{\sigma}^{+} = \bm{\sigma}(\bm{x}^{+})$ and $\bm{\sigma}^{-} = \bm{\sigma}(\bm{x}^{-})$
+and $\hat{n}^+ = \hat{n}(\bm{x}^{+})$ and $\hat{n}^- = \hat{n}(\bm{x}^{-})$ the last are the unit normal vectors 
+at those point respectively while the product $\bm{\sigma}\cdot\hat{n}$ represents the surface force at that point.
+
+\subsubsection{Uniform stress}
+
+In the next sections we are going to explain how can they be implemented using a FE discretization of the equations.
 
 \subsection{Mixture theory}
 
