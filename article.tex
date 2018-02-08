@@ -1,4 +1,5 @@
-\documentclass[review]{elsarticle}
+\documentclass[preprint]{elsarticle}
+%\documentclass[review]{elsarticle}
 
 \usepackage{lineno,hyperref}
 
@@ -708,6 +709,103 @@ natural frequencies by the formula
 \bm{M}\bm{U} = \lambda \bm{K}\bm{U}
 \label{eq:equil_matricial}
 \end{equation}
+
+%---------------------------------------------------------------------------------------------------
+
+\section{Numerical Implementation of the Micro-problem}
+
+\subsection{Uniform Strains Boundary Conditions}
+
+\subsection{Periodic Boundary Conditions}
+
+\begin{equation}
+\left\{
+\begin{array}{ll}
+\bm{f}_a(\bm{u}) = \bm{0} \\
+\bm{f}_b^+(\bm{u}) + \bm{f}_b^-(\bm{u}) = \bm{0} \\
+\bm{u}^+ - \bm{u}^- - \overline{\bm{\epsilon}} ( \bm{x}^+ - \bm{x}^- ) = \bm{0}\\
+\end{array}
+\right.
+\end{equation}
+
+\begin{equation}
+\bm{c}(\bm{x}) = \overline{\bm{\epsilon}} ( \bm{x}^+ - \bm{x}^- ) \\
+\end{equation}
+
+\begin{equation}
+\bm{u}^+ - \bm{u}^- - \bm{c}(\bm{x}) = \bm{0}
+\end{equation}
+
+\subsubsection{The Unknowns Elimination Method}
+
+\begin{equation}
+\bm{u}^+ = \bm{u}^- + \bm{c}(\bm{x}) 
+\end{equation}
+
+\begin{equation}
+\bm{u} = \begin{bmatrix}\bm{u}_a & \bm{u}_+ & \bm{u}_-\end{bmatrix}^T
+\end{equation}
+
+\begin{equation}
+d\bm{u}^+ = d\bm{u}^-
+\end{equation}
+
+\begin{equation}
+d\bm{u} = \begin{bmatrix}d\bm{u}_a & d\bm{u}_+ & d\bm{u}_-\end{bmatrix}^T = \begin{bmatrix}d\bm{u}_a & d\bm{u}_- & d\bm{u}_-\end{bmatrix}^T
+\end{equation}
+
+\begin{equation}
+\begin{bmatrix}
+\frac{\bm{f}_a}{d\bm{u}_a} & \frac{\bm{f}_a}{d\bm{u}_+} & \frac{\bm{f}_a}{d\bm{u}_-}\\
+\frac{\bm{f}_b^+ + \bm{f}_b^-}{d\bm{u}_a} & \frac{\bm{f}_b^+ + \bm{f}_b^-}{d\bm{u}_+} & \frac{\bm{f}_b^+ + \bm{f}_b^-}{d\bm{u}_-}\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}d\bm{u}_a \\ d\bm{u}_- \\ d\bm{u}_-\end{bmatrix}
+=
+\begin{bmatrix}\bm{f}_a(\bm{u}^{k-1}) \\ \bm{f}_b^+(\bm{u}^{k-1}) + \bm{f}_b^-(\bm{u}^{k-1}) \end{bmatrix}
+\end{equation}
+
+\begin{equation}
+\begin{bmatrix}
+K_{aa}          & K_{a+} + K_{a-} \\
+K_{+a} + K_{-a} & K_{++} + K_{-+}  + K_{+-} + K_{--} \\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}d\bm{u}_a \\ d\bm{u}_- \end{bmatrix}
+=
+-\begin{bmatrix}\bm{f}_a(\bm{u}^{k-1}) \\ \bm{f}_b^+(\bm{u}^{k-1}) + \bm{f}_b^-(\bm{u}^{k-1}) \end{bmatrix}
+\end{equation}
+
+
+The algorithm:
+
+\begin{equation}
+\bm{u}^{i=0} = \begin{bmatrix}\bm{u}_a^{0} \\ \bm{u}_+^{0} \\ \bm{u}_-^{0}\end{bmatrix} = \begin{bmatrix}\bm{0} \\ \bm{c} \\ \bm{0}\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+\bm{u}_a^{0} = \bm{0}, \, \bm{u}_-^{0} = 0 \text{ and } \bm{u}_+^{0} = \bm{u}_-^{0} + \bm{c} = \bm{c}
+\end{equation}
+
+\begin{equation}
+\bm{J}^{i-1}\cdot d\bm{u}^{i}
+=
+-r(\bm{u}^{i-1})
+\end{equation}
+
+
+\begin{equation}
+\bm{u}^{i+1} = 
+\begin{bmatrix}\bm{u}_a^{i-1} \\ \bm{u}_+^{i-1} \\ \bm{u}_-^{i-1}\end{bmatrix} 
++ 
+\begin{bmatrix} d\bm{u}_a^{i} \\ d\bm{u}_+^{i} \\ d\bm{u}_-^{i}\end{bmatrix}
+\end{equation}
+
+
+
+\subsubsection{The Lagrange Multipliers Method}
+
+\subsection{Uniform Stresses Boundary Conditions}
 
 %---------------------------------------------------------------------------------------------------
 
