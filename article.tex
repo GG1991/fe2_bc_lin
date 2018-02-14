@@ -3,7 +3,7 @@
 
 \usepackage{lineno,hyperref}
 
-\usepackage{amsmath, amsfonts, amsthm, mathrsfs, bm}
+\usepackage{amsmath, amsfonts, amsthm, mathrsfs, bm, bbm}
 \usepackage{siunitx} \sisetup{retain-zero-exponent}
 \usepackage{standalone}
 \usepackage{tikz}
@@ -15,7 +15,7 @@
 
 \modulolinenumbers[5]
 
-\journal{Journal of \LaTeX\ Templates}
+\journal{Computer Methods in Applied Mechanics and Engineering.}
 
 \bibliographystyle{elsarticle-num}
 
@@ -29,37 +29,19 @@
 
 \begin{frontmatter}
 
-%\title{Elsevier \LaTeX\ template\tnoteref{mytitlenote}}
-%\tnotetext[mytitlenote]{Fully documented templates are available in the elsarticle package on \href{http://www.ctan.org/tex-archive/macros/latex/contrib/elsarticle}{CTAN}.}
 \title{Linear and modal analysis applying the FE$^2$ multi-scale method for composite materials.}
 
-%% Group authors per affiliation:
 %\author{Elsevier\fnref{myfootnote}}
-%\address{Radarweg 29, Amsterdam}
 %\fntext[myfootnote]{Since 1880.}
+%\address{Carrer Jordi Girona 29, Barcelona}
 \author[bsc]{Guido Giuntoli}
-%\address{Carrer Jordi Girona 29, Barcelona}
 \author[bsc]{Mariano V\'azquez}
-%\address{Carrer Jordi Girona 29, Barcelona}
 \author[upc]{Sergio Oller}
-%\address{Carrer Jordi Girona 29, Barcelona}
-\address[bsc]{River Valley Technologies, SJP Building, Cotton Hills, Trivandrum, Kerala, India 695014}
-\address[upc]{River Valley Technologies, SJP Building, Cotton Hills, Trivandrum, Kerala, India 695014}
-
-%\fntext[myfootnote]{\ead[url]{guido.bsc.elisya.org}}
-
-%% or include affiliations in footnotes:
-%\author[mymainaddress,mysecondaryaddress]{Elsevier Inc}
-%\ead[url]{http://guido.bsc.elisya.org}
-
-%\author[mysecondaryaddress]{Global Customer Service\corref{mycorrespondingauthor}}
-%\cortext[mycorrespondingauthor]{Corresponding author}
-%\ead{support@elsevier.com}
-
-%\address[mymainaddress]{1600 John F Kennedy Boulevard, Philadelphia}
-%\address[mysecondaryaddress]{360 Park Avenue South, New York}
+\address[bsc]{Barcelona Supercomputing Center, Barcelona, Spain}
+\address[upc]{Universitat Polit\`ecnica de Catalunya, Barcelona, Spain}
 
 %---------------------------------------------------------------------------------------------------
+
 \begin{abstract}
 We study the homogenization method with \emph{uniform strains} boundary
 conditions in 2D composite material problems.
@@ -150,6 +132,7 @@ represents the displacement, strain and stress fields on the \emph{r.v.e.}.
 
 % <figure multi-scale scheme>
 \begin{figure}[!ht]
+\centering
 \resizebox{8cm}{!}{\input{figures/multiscale.tikz}}
 \caption{\label{fig:multi-scale}Simplified scheme of a multi-scale calculation 
 where at the left we have an homogenized macro-structure and 
@@ -471,6 +454,7 @@ and quadrangle respectively.
 
 % Master elements
 \begin{figure}[!ht]
+\centering
 \begin{minipage}[b]{0.4\linewidth}
 \subcaptionbox{\label{fig:tria_master}}{
 \resizebox{4.0cm}{!}{\input{figures/tria_master.tikz}}}
@@ -764,7 +748,10 @@ d\bm{u} = \begin{bmatrix}d\bm{u}_a & d\bm{u}_+ & d\bm{u}_-\end{bmatrix}^T = \beg
 \cdot
 \begin{bmatrix}d\bm{u}_a \\ d\bm{u}_- \\ d\bm{u}_-\end{bmatrix}
 =
-\begin{bmatrix}\bm{f}_a(\bm{u}^{k-1}) \\ \bm{f}_b^+(\bm{u}^{k-1}) + \bm{f}_b^-(\bm{u}^{k-1}) \end{bmatrix}
+\begin{bmatrix}
+\bm{f}_a(\bm{u}) \\
+\bm{f}_b^+(\bm{u}) + \bm{f}_b^-(\bm{u})
+\end{bmatrix}^{k-1}
 \end{equation}
 
 \begin{equation}
@@ -803,9 +790,64 @@ The algorithm:
 \begin{bmatrix} d\bm{u}_a^{i} \\ d\bm{u}_+^{i} \\ d\bm{u}_-^{i}\end{bmatrix}
 \end{equation}
 
-
-
 \subsubsection{The Lagrange Multipliers Method}
+
+\begin{equation}
+\left\{
+\begin{array}{ll}
+\bm{f}_a(\bm{u}) = \bm{0} \\
+\bm{f}_b^+(\bm{u}) + \bm{\lambda} = \bm{0} \\
+\bm{f}_b^-(\bm{u}) - \bm{\lambda} = \bm{0} \\
+\bm{u}^+ - \bm{u}^- - \bm{c} = \bm{0}\\
+\end{array}
+\right.
+\end{equation}
+
+\begin{equation}
+\begin{bmatrix}
+\frac{\partial\bm{f}_a}{\partial\bm{u}_a} & \frac{\partial\bm{f}_a}{\partial\bm{u}_+} & \frac{\partial\bm{f}_a}{\partial\bm{u}_-} &  \bm{0}\\
+\frac{\partial\bm{f}_+}{\partial\bm{u}_a} & \frac{\partial\bm{f}_+}{\partial\bm{u}_+} & \frac{\partial\bm{f}_+}{\partial\bm{u}_-} &  \mathbbm{1}\\
+\frac{\partial\bm{f}_-}{\partial\bm{u}_a} & \frac{\partial\bm{f}_-}{\partial\bm{u}_+} & \frac{\partial\bm{f}_-}{\partial\bm{u}_-} & -\mathbbm{1}\\
+\bm{0}                                    & \mathbbm{1}                               & -\mathbbm{1}                              &  \bm{0}\\
+\end{bmatrix}^{k-1}
+\cdot
+\begin{bmatrix}
+d\bm{u}_a \\
+d\bm{u}_+ \\
+d\bm{u}_- \\
+d\bm{\lambda}
+\end{bmatrix}^{k}
+=
+\begin{bmatrix}
+\bm{f}_a(\bm{u}) \\
+\bm{f}_b^+(\bm{u}) + \bm{\lambda} \\
+\bm{f}_b^-(\bm{u}) - \bm{\lambda} \\
+\bm{u}^{+} - \bm{u}^{-} - \bm{c}
+\end{bmatrix}^{k-1}
+\end{equation}
+
+\begin{equation}
+\begin{bmatrix}
+\bm{u}_a \\
+\bm{u}_+ \\
+\bm{u}_- \\
+\bm{\lambda}
+\end{bmatrix}^{k}
+= 
+\begin{bmatrix}
+\bm{u}_a \\
+\bm{u}_+ \\
+\bm{u}_- \\
+\bm{\lambda}
+\end{bmatrix}^{k-1}
++
+\begin{bmatrix}
+d\bm{u}_a \\
+d\bm{u}_+ \\
+d\bm{u}_- \\
+d\bm{\lambda}
+\end{bmatrix}^{k-1}
+\end{equation}
 
 \subsection{Uniform Stresses Boundary Conditions}
 
